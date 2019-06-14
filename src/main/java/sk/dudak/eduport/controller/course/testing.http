@@ -1,0 +1,13 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+#DELETE http://localhost:8081/v1/contributions?title=Indexes
+#Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6InN0dWRlbnQiLCJleHAiOjE1NjExOTI4MzMsInJvbGVzIjpbIlJPTEVfU1RVREVOVCJdLCJ1c2VybmFtZSI6InN0dWRlbnQifQ.INWrjrH9CGl_v2Vt8FxhBtnUQeupeyzNEMzvfzZHXfVBzgpDO6jAdBAdyTYNt7s-pLtKR1dlbHgJvgSVYyU_Qg
+
+GET  http://localhost:8081/v1/course/byUserId/?id=4
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6InN0dWRlbnQiLCJleHAiOjE1NjExOTI4MzMsInJvbGVzIjpbIlJPTEVfU1RVREVOVCJdLCJ1c2VybmFtZSI6InN0dWRlbnQifQ.INWrjrH9CGl_v2Vt8FxhBtnUQeupeyzNEMzvfzZHXfVBzgpDO6jAdBAdyTYNt7s-pLtKR1dlbHgJvgSVYyU_Qg
+
+###
