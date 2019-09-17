@@ -11,6 +11,7 @@ import sk.dudak.eduport.model.user.User;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -45,10 +46,11 @@ public class ContributionServiceImpl implements ContributionService {
 
     @Override
     public boolean addContribution(Contribution contribution, String course) throws Exception {
+        Objects.requireNonNull(contribution);
         final Optional<Course> courseByName = this.courseService.getCourseByName(course);
         if (courseByName.isPresent()) {
             contribution.setCourse(courseByName.get());
-            courseByName.get().getContributions().add(contribution);
+            courseByName.get().addContrib(contribution);
             this.contributionRepository.save(contribution);
             return true;
         } else
@@ -71,7 +73,7 @@ public class ContributionServiceImpl implements ContributionService {
     @Override
     public List<Contribution> getAllForCourse(String courseName) {
         return this.contributionRepository.findAll().stream()
-                .filter(contribution -> contribution.getCourse().getTitle().equals(courseName))
+                .filter(contribution -> contribution.getCourse().getAbbreviation().equals(courseName))
                 .collect(Collectors.toList());
     }
 

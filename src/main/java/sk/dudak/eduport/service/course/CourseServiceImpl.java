@@ -2,10 +2,13 @@ package sk.dudak.eduport.service.course;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import sk.dudak.eduport.dao.course.CourseRepository;
 import sk.dudak.eduport.model.course.Course;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,6 +28,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean addCourse(Course course) {
+        Objects.requireNonNull(course);
         if (!courseTitleExists(course)) {
             this.courseRepository.save(course);
             return true;

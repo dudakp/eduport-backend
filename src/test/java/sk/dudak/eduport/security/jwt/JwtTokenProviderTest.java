@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class JwtTokenProviderTest {
 
-    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     private User user;
@@ -41,14 +40,14 @@ public class JwtTokenProviderTest {
 
     @Test
     public void validateValidToken() {
-        Mockito.when(this.jwtTokenProvider.validateToken(this.validMockToken)).thenThrow(JwtException.class);
+//        Mockito.when(this.jwtTokenProvider.validateToken(this.validMockToken)).thenThrow(JwtException.class);
 
-        Assertions.assertThrows(JwtException.class, () -> this.jwtTokenProvider.validateToken(this.validMockToken));
+        Assertions.assertThrows(JwtException.class, () -> this.jwtTokenProvider.validateToken(this.nonValidMockToken));
     }
 
     @Test
     public void validateNonValidToken() {
-        Mockito.when(this.jwtTokenProvider.validateToken(this.nonValidMockToken)).thenReturn(false);
+//        Mockito.when(this.jwtTokenProvider.validateToken(this.nonValidMockToken)).thenReturn(false);
 
         Assertions.assertFalse(this.jwtTokenProvider.validateToken(this.nonValidMockToken));
     }

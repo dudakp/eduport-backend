@@ -54,7 +54,7 @@ public class CourseController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
+    public ResponseEntity<Course> createCourse(@RequestBody Course course) throws Exception {
         if (this.courseService.addCourse(course))
             return ok(course);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

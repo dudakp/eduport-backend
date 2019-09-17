@@ -43,6 +43,10 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> coursesEnrolled;
 
+    public boolean addCourse(Course course) {
+        return this.coursesEnrolled.add(course);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream().map(SimpleGrantedAuthority::new).collect(toList());

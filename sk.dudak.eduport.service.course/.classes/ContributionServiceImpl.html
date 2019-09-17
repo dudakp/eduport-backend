@@ -1,0 +1,172 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ContributionServiceImpl</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">sk.dudak.eduport.service.course</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ContributionServiceImpl (sk.dudak.eduport.service.course)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ContributionServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (6/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    56.2%
+  </span>
+  <span class="absValue">
+    (18/ 32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package sk.dudak.eduport.service.course;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>4</i>&nbsp;import org.springframework.stereotype.Service;
+<i>5</i>&nbsp;import sk.dudak.eduport.dao.course.ContributionRepository;
+<i>6</i>&nbsp;import sk.dudak.eduport.dao.course.CourseRepository;
+<i>7</i>&nbsp;import sk.dudak.eduport.dao.course.UserRepository;
+<i>8</i>&nbsp;import sk.dudak.eduport.model.course.Contribution;
+<i>9</i>&nbsp;import sk.dudak.eduport.model.course.Course;
+<i>10</i>&nbsp;import sk.dudak.eduport.model.user.User;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.util.Collections;
+<i>13</i>&nbsp;import java.util.List;
+<i>14</i>&nbsp;import java.util.Optional;
+<i>15</i>&nbsp;import java.util.stream.Collectors;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;@Service
+<i>19</i>&nbsp;public class ContributionServiceImpl implements ContributionService {
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    private final UserRepository userRepository;
+<i>22</i>&nbsp;    private final ContributionRepository contributionRepository;
+<i>23</i>&nbsp;    private final CourseService courseService;
+<i>24</i>&nbsp;    private final CourseRepository courseRepository;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Autowired
+<i>27</i>&nbsp;    public ContributionServiceImpl(UserRepository userRepository,
+<i>28</i>&nbsp;                                   ContributionRepository contributionRepository,
+<b class="fc"><i>29</i>&nbsp;                                   CourseService courseService, CourseRepository courseRepository) {</b>
+<b class="fc"><i>30</i>&nbsp;        this.userRepository = userRepository;</b>
+<b class="fc"><i>31</i>&nbsp;        this.contributionRepository = contributionRepository;</b>
+<b class="fc"><i>32</i>&nbsp;        this.courseService = courseService;</b>
+<b class="fc"><i>33</i>&nbsp;        this.courseRepository = courseRepository;</b>
+<b class="fc"><i>34</i>&nbsp;    }</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @Override
+<i>37</i>&nbsp;    public List&lt;Contribution&gt; getAll() {
+<b class="fc"><i>38</i>&nbsp;        return this.contributionRepository.findAll();</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    @Override
+<i>42</i>&nbsp;    public List&lt;Contribution&gt; getAllById(long id) {
+<b class="fc"><i>43</i>&nbsp;        return this.courseRepository.findById(id).get().getContributions();</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    @Override
+<i>47</i>&nbsp;    public boolean addContribution(Contribution contribution, String course) throws Exception {
+<b class="nc"><i>48</i>&nbsp;        final Optional&lt;Course&gt; courseByName = this.courseService.getCourseByName(course);</b>
+<b class="nc"><i>49</i>&nbsp;        if (courseByName.isPresent()) {</b>
+<b class="nc"><i>50</i>&nbsp;            contribution.setCourse(courseByName.get());</b>
+<b class="nc"><i>51</i>&nbsp;            courseByName.get().getContributions().add(contribution);</b>
+<b class="nc"><i>52</i>&nbsp;            this.contributionRepository.save(contribution);</b>
+<b class="nc"><i>53</i>&nbsp;            return true;</b>
+<i>54</i>&nbsp;        } else
+<b class="nc"><i>55</i>&nbsp;            return false;</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    @Override
+<i>59</i>&nbsp;    public List&lt;Contribution&gt; getAllForUser(String username) {
+<b class="fc"><i>60</i>&nbsp;        final Optional&lt;User&gt; byUsername = this.userRepository.findByUsername(username);</b>
+<b class="fc"><i>61</i>&nbsp;        if (byUsername.isPresent()) {</b>
+<b class="fc"><i>62</i>&nbsp;            return this.contributionRepository.findAll().stream()</b>
+<b class="fc"><i>63</i>&nbsp;                    .filter(contribution -&gt; contribution.getCourse().getUsers()</b>
+<b class="fc"><i>64</i>&nbsp;                            .contains(byUsername.get()))</b>
+<b class="fc"><i>65</i>&nbsp;                    .collect(Collectors.toList());</b>
+<i>66</i>&nbsp;        }
+<i>67</i>&nbsp;        else
+<b class="fc"><i>68</i>&nbsp;            return Collections.emptyList();</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    @Override
+<i>72</i>&nbsp;    public List&lt;Contribution&gt; getAllForCourse(String courseName) {
+<b class="fc"><i>73</i>&nbsp;        return this.contributionRepository.findAll().stream()</b>
+<b class="fc"><i>74</i>&nbsp;                .filter(contribution -&gt; contribution.getCourse().getAbbreviation().equals(courseName))</b>
+<b class="fc"><i>75</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    @Override
+<i>79</i>&nbsp;    public boolean deleteContribution(String contributionTitle) throws Exception {
+<b class="nc"><i>80</i>&nbsp;        final Optional&lt;Contribution&gt; toDelete = this.contributionRepository.findAll().stream()</b>
+<b class="nc"><i>81</i>&nbsp;                .filter(contribution -&gt; contribution.getTitle().equals(contributionTitle))</b>
+<b class="nc"><i>82</i>&nbsp;                .findFirst();</b>
+<b class="nc"><i>83</i>&nbsp;        if (toDelete.isPresent()) {</b>
+<b class="nc"><i>84</i>&nbsp;            this.contributionRepository.delete(toDelete.get());</b>
+<b class="nc"><i>85</i>&nbsp;            return true;</b>
+<i>86</i>&nbsp;        } else
+<b class="nc"><i>87</i>&nbsp;            return false;</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-07-24 09:42</div>
+</div>
+</body>
+</html>

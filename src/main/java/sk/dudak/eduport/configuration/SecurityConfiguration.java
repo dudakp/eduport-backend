@@ -45,6 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/auth/signin").permitAll()
                 .antMatchers("/auth/register").permitAll()
+                .antMatchers(HttpMethod.GET, "/contributions/all").permitAll()
                 .antMatchers(HttpMethod.POST, "/contributions/addContribution").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/v1/course").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -52,6 +53,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -70,11 +76,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         config.addAllowedMethod("DELETE");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean

@@ -1,6 +1,7 @@
 package sk.dudak.eduport.model.course;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "contribution")
 //@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 

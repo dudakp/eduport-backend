@@ -1,0 +1,62 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ContributionService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">sk.dudak.eduport.service.course</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ContributionService (sk.dudak.eduport.service.course)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">ContributionService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package sk.dudak.eduport.service.course;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import sk.dudak.eduport.model.course.Contribution;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.List;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;public interface ContributionService {
+<i>8</i>&nbsp;    boolean addContribution(Contribution contribution, String course) throws Exception;
+<i>9</i>&nbsp;    boolean deleteContribution(String contributionTitle) throws Exception;
+<i>10</i>&nbsp;    List&lt;Contribution&gt; getAll();
+<i>11</i>&nbsp;    List&lt;Contribution&gt; getAllForUser(String username);
+<i>12</i>&nbsp;    List&lt;Contribution&gt; getAllForCourse(String courseName);
+<i>13</i>&nbsp;    List&lt;Contribution&gt; getAllById(long id);
+<i>14</i>&nbsp;}
+<i>15</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-07-24 09:42</div>
+</div>
+</body>
+</html>

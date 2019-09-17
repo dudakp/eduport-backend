@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     private final CourseRepository courseRepository;
     private final CourseService courseService;
 
-    @Autowired
+    //    @Autowired
     public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository, CourseService courseService) {
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getStudents() {
         return this.userRepository.findAll().stream()
-                .filter(user -> user.getRoles().contains("ROLE_STUDENT"))
-                .collect(Collectors.toList());
+                                  .filter(user -> user.getRoles().contains("ROLE_STUDENT"))
+                                  .collect(Collectors.toList());
     }
 
     @Override
@@ -57,11 +57,10 @@ public class UserServiceImpl implements UserService {
         if (byUsername.isPresent() && courseByName.isPresent()) {
             if (byUsername.get().getCoursesEnrolled().contains(courseByName.get()))
                 return false;
-            byUsername.get().getCoursesEnrolled().add(courseByName.get());
+            byUsername.get().addCourse(courseByName.get());
             this.courseRepository.save(courseByName.get());
             return true;
         }
         return false;
     }
-
 }
